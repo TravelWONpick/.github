@@ -136,11 +136,32 @@
 </br>
 
 ---
+
+## 🎞 Service 시연 영상
+
+### 사용자
+[![사용자](https://github.com/user-attachments/assets/6a3d6406-a961-472b-8749-0f9a07619390)](https://youtu.be/0IAAcn4IQXo)
+
+### 관리자
+[![관리자](https://github.com/user-attachments/assets/6a3d6406-a961-472b-8749-0f9a07619390)](https://youtu.be/ejkkZa88FQA)
+
+</br>
+
+---
 ## 👨‍💻 구축 내용
 
 ### OOO
 
 </br>
+
+---
+## 🎞 부하 / 가용성 테스트 시연 영상
+
+### 부하 테스트
+[![부하테스트](https://github.com/user-attachments/assets/869ef752-1b8f-4d1e-8224-0a8d04ceed05)](https://youtu.be/mVViaBnOQaI)
+
+### 고가용성 테스트
+[![가용성테스트](https://github.com/user-attachments/assets/8df229e6-1ad1-4e93-a220-78ea7cefb2fb)](https://youtu.be/fEHAHB_kEGo)
 
 ---
 ## 🎯 트러블슈팅
