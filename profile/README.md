@@ -1,8 +1,6 @@
 # ✈ no title
 
 ---
-<br>
-
 ## 👨‍👨‍👧 개발팀원  
 
 | <img src="https://avatars.githubusercontent.com/u/139302518?v=4" width="80"> | <img src="https://avatars.githubusercontent.com/u/127727927?v=4" width="80"> | <img src="https://avatars.githubusercontent.com/u/98442485?v=4" width="80"> | <img src="https://avatars.githubusercontent.com/u/79884688?v=4" width="80"> | <img src="https://avatars.githubusercontent.com/u/79312705?v=4" width="80"> |
@@ -10,9 +8,6 @@
 | [곽병찬](https://github.com/gato-46) | [부준혁](https://github.com/BooJunhyuk) | [이연희](https://github.com/LeeYeonhee-00) | [박장우](https://github.com/Lisiant) | [김상민](https://github.com/isshomin) |
 
 ---
-
-<br>
-
 ## ✒ 개요 - 프로젝트 주제
 
 ### 트래블 WON픽 - **클라우드 기반 고가용성 클라우드 시스템 구축**
@@ -72,9 +67,37 @@
 </br>
 
 ---
+## 💪 기술 스택
+
+![skill](https://github.com/user-attachments/assets/c55a6dbc-d94c-44dd-9bd9-9f5ce531d0d2)
+
+---
+
+---
+## 🏗️ Architecture
+
+### Infra
+![86](https://github.com/user-attachments/assets/bc1de7ee-bd8a-472c-a215-8402f4ad98ff)
 
 </br>
 
+### Service
+![image 87](https://github.com/user-attachments/assets/aa78e731-6bcb-4339-8a60-82e51867c429)
+
+---
+## ✍ 소스 코드
+
+</br>
+
+⚛️ [Front-end](https://github.com/TravelWONpick/TravelWONpick_client)
+
+🛢 [Back-end](https://github.com/TravelWONpick/TravelWONpick_server)
+
+👷🏼‍♂️ [Infra](https://github.com/TravelWONpick/TravelWONpick_infra)
+
+</br>
+
+---
 ## 📋 API 명세서 
 | 이름                     | HTTP Method | URL                                                                                     | 기능             | 설명                                                                                      |
 |--------------------------|-------------|-----------------------------------------------------------------------------------------|------------------|------------------------------------------------------------------------------------------|
@@ -110,5 +133,17 @@
 </br>
 
 ---
+## 👨‍💻 구축 내용
+
+### OOO
 
 </br>
+
+---
+## 🎯 트러블슈팅
+
+### OOO
+
+</br>
+
+---
