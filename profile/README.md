@@ -19,8 +19,8 @@
 
 </br>
 
-<details>
-  <summary>📌 프로젝트 개요 (클릭해서 펼쳐보기)</summary>
+ <details>
+  <summary><h3>📌 프로젝트 개요 (클릭해서 펼쳐보기) </h3></summary>
 
 ## 왜 이 주제인가?
 
@@ -164,7 +164,10 @@
 [![가용성테스트](https://github.com/user-attachments/assets/8df229e6-1ad1-4e93-a220-78ea7cefb2fb)](https://youtu.be/fEHAHB_kEGo)
 
 ---
+
 ## 🎯 트러블슈팅
+
+</br>
 
 ## 🔵 Infra
 
@@ -179,10 +182,13 @@ Error starting ApplicationContext. To display the condition evaluation report re
 
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'paymentController' defined in URL [jar:nested:/app/app.jar/!BOOT-INF/classes/!/wonpick/travel/server/controller/PaymentController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'paymentService' defined in URL [jar:nested:/app/app.jar/!BOOT-INF/classes/!/wonpick/travel/server/service/PaymentService.class]: Unsatisfied dependency expressed through constructor parameter 3: Error creating bean with name 'redissonClient' defined in class path resource [wonpick/travel/server/config/RedissonConfig.class]: Failed to instantiate [org.redisson.api.RedissonClient]: Factory method 'redissonClient' threw exception with message: java.net.MalformedURLException: Invalid authority field: [redis:
 ```
+</br>
 
 ## ❓원인
 
-### 디코딩 결과 base64로 암호화 하는 도중 줄넘김이 포함되었다는 사실 발견
+디코딩 결과 base64로 암호화 하는 도중 줄넘김이 포함되었다는 사실 발견
+
+</br>
 
 ## 🚀 해결 방안
 
@@ -202,11 +208,185 @@ username@servername:~$ echo -n '{내용}' | base64
 
 `echo -n '{내용}' | base64`  : 기존 명령어에 `-n` 을 추가하여 줄넘김을 방지하여 해결
 
+---
+
 </br>
 
-## 2️⃣) 
+## 2️⃣) nginx-config api 정규식 문제
 
-### Service
+![image.png](https://github.com/user-attachments/assets/9547ef63-6d3d-409c-bce6-fa60a7b7936b)
+
+![image.png](https://github.com/user-attachments/assets/ff0af424-a1ef-46af-8e1a-0a1866da3a5e)
+
+### 특정 api만 연동되는 문제
+
+</br>
+
+## ❓원인
+
+/OOO/OOO mapping 형식의 api만 불러오고
+/OOO mapping 형식의 api는 불러오지 못함 
+
+</br>
+
+## 🚀 해결 방안
+
+```yaml
+#수정 전
+location ~ ^/[^.]+/ {
+           ...
+       }
+   
+#수정 후
+ location ~ ^/[^.]+(/|$) {
+           ...
+       }
+```
+위의 정규식 표현 ~ ^/[^.]+/  →   location ~ ^/[^.]+(/|$) 으로 수정
+
+---
+
+</br>
+
+## 3️⃣) Unhealthy nodes 문제
+
+![Image](https://github.com/user-attachments/assets/c4b09db3-796c-4e4c-955e-5b3831e776a0)
+
+![Image](https://github.com/user-attachments/assets/a8c7aca0-0f50-4602-8917-bbbac99380ae)
+
+</br>
+
+## ❓원인
+
+기본 CNI는 AWS CNI로 구성을 하게 되는데 워커 노드에 CNI 정책 룰이 없어 정책으로 인해 실패함
+
+</br>
+
+## 🚀 해결 방안
+
+노드 그룹 생성 시 선택하는 정책에 AmazonEKS_CNI_Policy 룰을 추가
+
+
+![Image](https://github.com/user-attachments/assets/cca6ebd5-0ff0-492f-9889-7c3c29bb3017)
+AmazonEKS_CNI_Policy 권한 추가
+
+</br>
+
+<img width="1211" alt="Image" src="https://github.com/user-attachments/assets/e2877ba4-0af6-4295-90ba-5353a6e1bfef" />
+노드 그룹 재생성
+
+---
+
+</br>
+
+## 4️⃣) 노드 그룹 생성 실패
+
+<img width="1142" alt="Image" src="https://github.com/user-attachments/assets/4ab8d59e-4b67-4ebe-b2fc-5b36c5c0da48" />
+
+</br>
+
+<img width="1071" alt="Image" src="https://github.com/user-attachments/assets/c72d5c3d-5bb9-4b41-8faf-d14d938849af" />
+
+### 클러스터 생성 후 nodegroup 생성 실패 발생
+
+</br>
+
+## ❓원인
+
+![Image](https://github.com/user-attachments/assets/7fee7836-513d-4e0d-8e65-9a69683bd257)
+
+VPC를 확인해보니 PivateSubnet의 라우팅 테이블에 NAT-GW가 연결이 되어있지 않았고
+
+(라우팅 테이블에 NAT게이트웨이가 **블랙홀** 상태인 것을 확인)
+
+NAT 게이트웨이를 확인하니 서브넷이 private으로 설정되어 있는 것을 발견
+
+</br>
+
+## 🚀 해결 방안
+
+![Image](https://github.com/user-attachments/assets/e928f9ee-4fd5-4540-bce3-bf385d530bcd)
+
+NAT게이트웨이를 재생성할 때 서브넷을 Public으로 설정
+
+---
+
+</br>
+
+## 5️⃣) React CI pipeline 작성 시 빌드 경로 문제
+
+```yaml
+Running in /var/lib/jenkins/workspace/travelwonpick_client
+[Pipeline] {
+[Pipeline] sh
++ npm run build
+
+> fisa-project@0.0.0 build
+> vite build
+
+[36mvite v5.4.10 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 2 modules transformed.
+[31mx[39m Build failed in 403ms
+[31merror during build:
+[31m[vite]: Rollup failed to resolve import "\src\index.jsx" from "/var/lib/jenkins/workspace/travelwonpick_client/index.html".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`[31m
+    at viteWarn (file:///var/lib/jenkins/workspace/travelwonpick_client/node_modules/vite/dist/node/chunks/dep-BWSbWtLw.js:65589:17)
+    at onwarn (file:///var/lib/jenkins/workspace/travelwonpick_client/node_modules/@vitejs/plugin-react/dist/index.mjs:280:9)
+    at onRollupWarning (file:///var/lib/jenkins/workspace/travelwonpick_client/node_modules/vite/dist/node/chunks/dep-BWSbWtLw.js:65619:5)
+    at onwarn (file:///var/lib/jenkins/workspace/travelwonpick_client/node_modules/vite/dist/node/chunks/dep-BWSbWtLw.js:65284:7)
+    at file:///var/lib/jenkins/workspace/travelwonpick_client/node_modules/rollup/dist/es/shared/node-entry.js:19423:13
+    at Object.logger [as onLog] (file:///var/lib/jenkins/workspace/travelwonpick_client/node_modules/rollup/dist/es/shared/node-entry.js:21149:9)
+    at ModuleLoader.handleInvalidResolvedId (file:///var/lib/jenkins/workspace/travelwonpick_client/node_modules/rollup/dist/es/shared/node-entry.js:20038:26)
+    at file:///var/lib/jenkins/workspace/travelwonpick_client/node_modules/rollup/dist/es/shared/node-entry.js:19996:26[39m
+```
+
+### On-Premise(Ubuntu)환경에서 client CI 구성 중 npm run build 중 경로 관련 오류 발생
+
+</br>
+
+## ❓원인
+
+React에서 `index.html` 파일에 있는 경로가 **백슬래시(`\`)**를 포함하고 있는데 리눅스에서는 **슬래시(`/`)**를 사용해야 함
+
+</br>
+
+## 🚀 해결 방안
+
+- index.html 수정
+
+```yaml
+<script type="module" src="/src/index.jsx"></script>
+```
+- vite.config.js에 resolve추가
+
+```yaml
+// vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    }
+  },
+  build: {
+    outDir: 'build'
+  }
+})
+```
+
+---
+
+</br>
+
+
+## 🔴 Service
 
 
 </br>
